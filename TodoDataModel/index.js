@@ -30,6 +30,13 @@ const todos = [
 // Set an ID counter to be used when making new todos
 let todoIdCounter = todos.length
 
+function newTodo(title, category, dueDate) {
+    todoIdCounter += 1
+    let newTodo = new todo(title, todoIdCounter, category, dueDate)
+    todos.push(newTodo)
+    addTodoToHTML(newTodo)
+}
+
 function addTodoToHTML(todo) {
     function createElement (el, clsList, txt="") {
         let newElement = document.createElement(el)
