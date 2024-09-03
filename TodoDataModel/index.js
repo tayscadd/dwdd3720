@@ -1,28 +1,49 @@
+// Instead of using a function to create a todo, I'm just going to use a class since I can also add functions to it.
+
 class todo {
-    constructor(title, info, completed=false) {
-        this.title = title
-        this.info = info
-        this.completed = (completed===true) ? true : false
+    constructor(name, id, category, dueDate, status=false) {
+        this.name = name
+        this.id = id
+        this.category = category
+        this.dueDate = dueDate
+        this.status = (status===true) ? true : false
+    }
+
+    // Toggles the status. If it was true, than make it false. If it was false, make it true.
+    complete() {
+        this.status = (this.status===true) ? false : true
+    }
+
+    // Removes the todo from the todos array. 
+        // NOTE: WILL also need to have it delete it's match on the HTML side.
+    delete() {
+        const thisIndex = todos.indexOf(this)
+        // If the value is bigger than 0 (it was found), than remove it.
+        if (thisIndex > -1) {todos.splice(thisIndex, 1)}
     }
 }
-
+ 
 const todos = [
-    new todo('Creating a Todo App', 'An assignment for DWDD3720'),
-    new todo('Example 2', 'This is the second example.'),
-    new todo('Example 3', 'This is the third example.'),
-    new todo('Example 4', 'This is the fourth example.'),
-    new todo('Example 5', 'This is the fifth example.')
+    new todo('Example 1', 1, 'An assignment for DWDD3720'),
+    new todo('Example 2', 2, 'This is the second example.'),
 ]
+// Set an ID counter to be used when making new todos
+let todoIdCounter = todos.length
 
-function addTodoToList(todo) {
-    
-}
 function addTodoToHTML(todo) {
-    let div 
+    function createElement (el, clsList, txt="") {
+        let newElement = document.createElement(el)
+        newElement.classList.add(...clsList)
+        if (txt !== "") {
+            newElement.innerHTML = txt
+        }
+        return newElement
+    }
+    let container = createElement('div', ['todoItem'])
+    let newTodoTitle = createElement('p', ['todoItemHeader'], todo.title)
+    let newTodoInfo = createElement('p', ['todoItemInfo'], todo.info)
+    
+    container.append(newTodoTitle, newTodoInfo)
 }
 
-console.log(todos)
-
-todos.push(new todo('Example 6', 'This is the sixth example.'))
-
-console.log(todos)
+todos[0].delete()
